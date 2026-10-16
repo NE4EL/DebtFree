@@ -204,109 +204,128 @@ flowchart LR
 ## 3. Диаграмма бизнес-процесса (BPMN)
 
 Процесс «Планирование погашения долгов» в нотации BPMN 2.0: две дорожки (lanes) внутри пула, события (круги), задачи (прямоугольники), исключающие шлюзы (ромбы). Диаграмма построена средствами Mermaid, поэтому изображение приближено к BPMN-нотации: дорожки показаны как вложенные группы.
-```mermaid
-%% Управление долгами
-    I4 --> U3 --> I5 --> U4 --> I6 --> V3 --> G2
-    G2 -- "Нет" --> I7 --> U4
-    G2 -- "Да" --> D2 --> G3
-    G3 -- "Да" --> U3
-    G3 -- "Нет" --> U5
-
-    %% Проверка бюджета и расчёт
-    U5 --> U6 --> I8 --> V4 --> G4
-    G4 -- "Нет" --> I9 --> U5
-    G4 -- "Да" --> C1 --> C2 --> C3 --> C4 --> C5
-    C5 --> I10 --> U7 --> G6
-
-    %% Досрочное погашение
-    G6 -- "Да" --> U8 --> I11 --> V5 --> G7
-    G7 -- "Нет" --> I12 --> U8
-    G7 -- "Да" --> C6 --> I13 --> U9 --> G8
-    G6 -- "Нет" --> G8
-
-    %% Сохранение сценария
-    G8 -- "Да" --> U10 --> I14 --> V6 --> D3 --> I15 --> E
-    G8 -- "Нет" --> E
-
-    %% Сдержанная палитра проекта
-    classDef event fill:#ffffff,stroke:#333333,stroke-width:2px,color:#111827;
-    classDef endEvent fill:#ffffff,stroke:#333333,stroke-width:4px,color:#111827;
-    classDef userTask fill:#e4f0ff,stroke:#1a3d6d,stroke-width:1.5px,color:#0b2545;
-    classDef uiTask fill:#edf6ff,stroke:#2563a6,stroke-width:1.5px,color:#123b66;
-    classDef serviceTask fill:#e9f6e9,stroke:#2e7d32,stroke-width:1.5px,color:#1b4d1f;
-    classDef calcTask fill:#fff3d6,stroke:#9a6700,stroke-width:1.5px,color:#5c3b00;
-    classDef dbTask fill:#f0eafa,stroke:#67418a,stroke-width:1.5px,color:#432960;
-    classDef gateway fill:#fff7d6,stroke:#8a5a00,stroke-width:1.8px,color:#5c3b00;
-
-    class S event;
-    class E endEvent;
-    class U1,U2,U3,U4,U5,U6,U7,U8,U9,U10 userTask;
-    class I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15 uiTask;
-    class V1,V2,V3,V4,V5,V6 serviceTask;
-    class C1,C2,C3,C4,C5,C6 calcTask;
-    class D1,D2,D3 dbTask;
-    class G1,G2,G3,G4,G6,G7,G8 gateway;
-
-    style POOL fill:#ffffff,stroke:#333333,stroke-width:2px,color:#111827
-    style USER fill:#f6f8fb,stroke:#64748b,color:#111827
-    style UI fill:#f7fbff,stroke:#64748b,color:#111827
-    style SERVICE fill:#f6fbf6,stroke:#64748b,color:#111827
-    style CALC fill:#fffbf2,stroke:#64748b,color:#111827
-    style DB fill:#faf8fd,stroke:#64748b,color:#111827
-```
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables': {'edgeLabelBackground':'#ffffff','lineColor':'#333333','textColor':'#000000'}}}%%
-flowchart LR
-    subgraph POOL["Пул: DebtFree — планирование погашения"]
-        direction LR
+%%{init: {"theme": "base", "fontFamily": "Arial, sans-serif", "themeVariables": {"fontFamily": "Arial, sans-serif", "lineColor": "#000000", "textColor": "#000000", "edgeLabelBackground": "#ffffff"}}}%%
+block-beta
+  %% Пул «Планирование погашения долгов» (DebtFree): 6 горизонтальных дорожек
+  columns 1
+  block:LANES
+    columns 1
 
-        subgraph LU["Дорожка: Пользователь"]
-            direction TB
-            S(("Начало"))
-            A1["Ввести данные<br/>долгов и бюджет"]
-            A2["Просмотреть план<br/>и график остатка"]
-            A3["Сравнить стратегии"]
-            G3{"Нужен<br/>досрочный<br/>платёж?"}
-            A4["Ввести сумму<br/>и тип эффекта"]
-            A5["Сохранить сценарий"]
-            E((("Конец")))
-        end
-
-        subgraph LS["Дорожка: Система DebtFree"]
-            direction TB
-            B1["Проверить<br/>введённые данные"]
-            G1{"Данные<br/>корректны?"}
-            G2{"Бюджет ≥ суммы<br/>мин. платежей?"}
-            B2["Показать<br/>сообщение об ошибке"]
-            B3["Рассчитать платежи<br/>и график остатка"]
-            B4["Смоделировать стратегии:<br/>Лавина, Снежный ком, Базовая"]
-            B5["Рассчитать срок<br/>и общую переплату"]
-            B6["Пересчитать с учётом<br/>досрочного платежа"]
-            B7["Записать сценарий в БД"]
-        end
+    %% Дорожка 1: Гость
+    block:LN1
+      columns 15
+      LB1["Гость"] S(("&nbsp;&nbsp;Начало&nbsp;&nbsp;")) T1("Войти или<br/>зарегистрироваться") space space
+      space space space space space
+      space space space space space
     end
 
-    S --> A1 --> B1 --> G1
-    G1 -- "Нет" --> B2 --> A1
-    G1 -- "Да" --> G2
-    G2 -- "Нет" --> B2
-    G2 -- "Да" --> B3 --> A2 --> A3 --> B4 --> B5 --> G3
-    G3 -- "Да" --> A4 --> B6 --> B5
-    G3 -- "Нет" --> A5 --> B7 --> E
+    %% Дорожка 2: Пользователь
+    block:LN2
+      columns 15
+      LB2["Пользователь"] space space space U1("Ввести данные<br/>долга")
+      space space G3{"Добавить<br/>ещё долг?"} U2("Задать месячный<br/>бюджет") space
+      space U5("Ввести сумму<br/>и эффект платежа") G5{"Нужен<br/>досрочный<br/>платёж?"} U6("Сохранить<br/>сценарий") space
+    end
 
-    %% цвет текста задаётся параметром color
-    classDef event   fill:#ffffff,stroke:#333,stroke-width:2px,color:#000000;
-    classDef gateway fill:#fff7d6,stroke:#8a5a00,color:#5c3b00;
-    classDef task    fill:#e4f0ff,stroke:#1a3d6d,color:#0b2545;
-    class S,E event;
-    class G1,G2,G3 gateway;
-    class A1,A2,A3,A4,A5,B1,B2,B3,B4,B5,B6,B7 task;
+    %% Дорожка 3: Веб-интерфейс
+    block:LN3
+      columns 15
+      LB3["Веб-интерфейс"] space T2("Отправить<br/>email и пароль") E1("Показать<br/>ошибку входа") L1("Показать<br/>список долгов")
+      F1("Отправить<br/>данные долга") E2("Показать ошибку<br/>в форме") L2("Обновить<br/>список долгов") F2("Отправить<br/>бюджет") E3("Показать ошибку<br/>бюджета")
+      space F3("Отправить<br/>досрочный платёж") L3("Показать график<br/>и сравнение") F4("Отправить<br/>сценарий") space
+    end
 
-    %% заголовки дорожек и пула
-    style POOL fill:#ffffff,stroke:#333,color:#000000
-    style LU   fill:#f6f8fb,stroke:#1a3d6d,color:#0b2545
-    style LS   fill:#f6fbf6,stroke:#2e7d32,color:#1b4d1f
+    %% Дорожка 4: REST API (FastAPI)
+    block:LN4
+      columns 15
+      LB4["REST API<br/>(FastAPI)"] space T3("Проверить<br/>учётные данные") G1{"Вход<br/>выполнен?"} space
+      V1("Проверить<br/>данные долга") G2{"Данные<br/>корректны?"} space V2("Проверить<br/>бюджет") G4{"Бюджет ≥ мин.<br/>платежей?"}
+      space V3("Передать параметры<br/>в расчёт") A1("Сформировать<br/>результат") V4("Проверить<br/>данные сценария") space
+    end
+
+    %% Дорожка 5: Модуль расчётов
+    block:LN5
+      columns 15
+      LB5["Модуль<br/>расчётов"] space space space space
+      space space space space space
+      C1("Рассчитать платежи<br/>и график остатка") C2("Смоделировать<br/>стратегии") C3("Рассчитать срок<br/>и переплату") space space
+    end
+
+    %% Дорожка 6: База данных
+    block:LN6
+      columns 15
+      LB6["База данных"] space T4("Найти учётную<br/>запись") space space
+      space D1("Сохранить долг") space space D2("Загрузить долги<br/>пользователя")
+      space space space D3("Записать<br/>сценарий") E(("&nbsp;&nbsp;Конец&nbsp;&nbsp;"))
+    end
+  end
+
+  %% Потоки управления
+  S --> T1
+  T1 --> T2
+  T2 --> T3
+  T3 --> T4
+  T4 --> G1
+  G1 -- "Нет" --> E1
+  E1 --> T1
+  G1 -- "Да" --> L1
+  L1 --> U1
+  U1 --> F1
+  F1 --> V1
+  V1 --> G2
+  G2 -- "Нет" --> E2
+  E2 --> U1
+  G2 -- "Да" --> D1
+  D1 --> L2
+  L2 --> G3
+  G3 -- "Да" --> U1
+  G3 -- "Нет" --> U2
+  U2 --> F2
+  F2 --> V2
+  V2 --> G4
+  G4 -- "Нет" --> E3
+  E3 --> U2
+  G4 -- "Да" --> D2
+  D2 --> C1
+  C1 --> C2
+  C2 --> C3
+  C3 --> A1
+  A1 --> L3
+  L3 --> G5
+  G5 -- "Да" --> U5
+  U5 --> F3
+  F3 --> V3
+  V3 --> C1
+  G5 -- "Нет" --> U6
+  U6 --> F4
+  F4 --> V4
+  V4 --> D3
+  D3 --> E
+
+  %% Стиль BPMN: чёрно-белый, без иконок
+  classDef task fill:#ffffff,stroke:#000000,stroke-width:1.5px,color:#000000
+  classDef gateway fill:#ffffff,stroke:#000000,stroke-width:1.5px,color:#000000
+  classDef startEvent fill:#ffffff,stroke:#000000,stroke-width:1.5px,color:#000000
+  classDef endEvent fill:#ffffff,stroke:#000000,stroke-width:4px,color:#000000
+  class T1,T2,T3,T4,E1,L1,U1,F1,V1,E2,D1,L2,U2,F2,V2,E3,D2,C1,C2,C3,A1,L3,U5,F3,V3,U6,F4,V4,D3 task
+  class G1,G2,G3,G4,G5 gateway
+  class S startEvent
+  class E endEvent
+  style LANES fill:#ffffff,stroke:#000000,stroke-width:2px
+  style LN1 fill:#ffffff,stroke:#000000,stroke-width:1.5px
+  style LB1 fill:#ffffff,stroke:#000000,stroke-width:1.5px,color:#000000
+  style LN2 fill:#ffffff,stroke:#000000,stroke-width:1.5px
+  style LB2 fill:#ffffff,stroke:#000000,stroke-width:1.5px,color:#000000
+  style LN3 fill:#ffffff,stroke:#000000,stroke-width:1.5px
+  style LB3 fill:#ffffff,stroke:#000000,stroke-width:1.5px,color:#000000
+  style LN4 fill:#ffffff,stroke:#000000,stroke-width:1.5px
+  style LB4 fill:#ffffff,stroke:#000000,stroke-width:1.5px,color:#000000
+  style LN5 fill:#ffffff,stroke:#000000,stroke-width:1.5px
+  style LB5 fill:#ffffff,stroke:#000000,stroke-width:1.5px,color:#000000
+  style LN6 fill:#ffffff,stroke:#000000,stroke-width:1.5px
+  style LB6 fill:#ffffff,stroke:#000000,stroke-width:1.5px,color:#000000
 ```
 
 | Элемент BPMN | Обозначение на диаграмме |
