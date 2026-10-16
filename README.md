@@ -162,15 +162,15 @@ flowchart LR
 
 | Дочернее поле (FK) | Родительское поле (PK) | Кратность | Смысл |
 |--------------------|------------------------|-----------|-------|
-| `debts.user_id` | `users.id` | N : 1 | Долг принадлежит пользователю |
-| `scenarios.user_id` | `users.id` | N : 1 | Сценарий принадлежит пользователю |
-| `scenarios.strategy_id` | `strategies.id` | N : 1 | Сценарий использует стратегию |
-| `scenario_debts.scenario_id` | `scenarios.id` | N : 1 | Состав сценария (связь M:N с долгами) |
-| `scenario_debts.debt_id` | `debts.id` | N : 1 | Состав сценария (связь M:N со сценариями) |
-| `payment_schedule.scenario_id` | `scenarios.id` | N : 1 | Строка графика относится к сценарию |
-| `payment_schedule.debt_id` | `debts.id` | N : 1 | Строка графика относится к долгу |
-| `extra_payments.scenario_id` | `scenarios.id` | N : 1 | Досрочный платёж в рамках сценария |
-| `extra_payments.debt_id` | `debts.id` | N : 1 | Досрочный платёж по долгу |
+| `debts.user_id` | `users.id` | Долг принадлежит пользователю |
+| `scenarios.user_id` | `users.id` | Сценарий принадлежит пользователю |
+| `scenarios.strategy_id` | `strategies.id` | Сценарий использует стратегию |
+| `scenario_debts.scenario_id` | `scenarios.id` | Состав сценария (связь M:N с долгами) |
+| `scenario_debts.debt_id` | `debts.id` | Состав сценария (связь M:N со сценариями) |
+| `payment_schedule.scenario_id` | `scenarios.id` | Строка графика относится к сценарию |
+| `payment_schedule.debt_id` | `debts.id` | Строка графика относится к долгу |
+| `extra_payments.scenario_id` | `scenarios.id` | Досрочный платёж в рамках сценария |
+| `extra_payments.debt_id` | `debts.id` | Досрочный платёж по долгу |
 
 ---
 
