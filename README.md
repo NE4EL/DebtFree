@@ -204,6 +204,56 @@ flowchart LR
 ## 3. Диаграмма бизнес-процесса (BPMN)
 
 Процесс «Планирование погашения долгов» в нотации BPMN 2.0: две дорожки (lanes) внутри пула, события (круги), задачи (прямоугольники), исключающие шлюзы (ромбы). Диаграмма построена средствами Mermaid, поэтому изображение приближено к BPMN-нотации: дорожки показаны как вложенные группы.
+```mermaid
+%% Управление долгами
+    I4 --> U3 --> I5 --> U4 --> I6 --> V3 --> G2
+    G2 -- "Нет" --> I7 --> U4
+    G2 -- "Да" --> D2 --> G3
+    G3 -- "Да" --> U3
+    G3 -- "Нет" --> U5
+
+    %% Проверка бюджета и расчёт
+    U5 --> U6 --> I8 --> V4 --> G4
+    G4 -- "Нет" --> I9 --> U5
+    G4 -- "Да" --> C1 --> C2 --> C3 --> C4 --> C5
+    C5 --> I10 --> U7 --> G6
+
+    %% Досрочное погашение
+    G6 -- "Да" --> U8 --> I11 --> V5 --> G7
+    G7 -- "Нет" --> I12 --> U8
+    G7 -- "Да" --> C6 --> I13 --> U9 --> G8
+    G6 -- "Нет" --> G8
+
+    %% Сохранение сценария
+    G8 -- "Да" --> U10 --> I14 --> V6 --> D3 --> I15 --> E
+    G8 -- "Нет" --> E
+
+    %% Сдержанная палитра проекта
+    classDef event fill:#ffffff,stroke:#333333,stroke-width:2px,color:#111827;
+    classDef endEvent fill:#ffffff,stroke:#333333,stroke-width:4px,color:#111827;
+    classDef userTask fill:#e4f0ff,stroke:#1a3d6d,stroke-width:1.5px,color:#0b2545;
+    classDef uiTask fill:#edf6ff,stroke:#2563a6,stroke-width:1.5px,color:#123b66;
+    classDef serviceTask fill:#e9f6e9,stroke:#2e7d32,stroke-width:1.5px,color:#1b4d1f;
+    classDef calcTask fill:#fff3d6,stroke:#9a6700,stroke-width:1.5px,color:#5c3b00;
+    classDef dbTask fill:#f0eafa,stroke:#67418a,stroke-width:1.5px,color:#432960;
+    classDef gateway fill:#fff7d6,stroke:#8a5a00,stroke-width:1.8px,color:#5c3b00;
+
+    class S event;
+    class E endEvent;
+    class U1,U2,U3,U4,U5,U6,U7,U8,U9,U10 userTask;
+    class I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15 uiTask;
+    class V1,V2,V3,V4,V5,V6 serviceTask;
+    class C1,C2,C3,C4,C5,C6 calcTask;
+    class D1,D2,D3 dbTask;
+    class G1,G2,G3,G4,G6,G7,G8 gateway;
+
+    style POOL fill:#ffffff,stroke:#333333,stroke-width:2px,color:#111827
+    style USER fill:#f6f8fb,stroke:#64748b,color:#111827
+    style UI fill:#f7fbff,stroke:#64748b,color:#111827
+    style SERVICE fill:#f6fbf6,stroke:#64748b,color:#111827
+    style CALC fill:#fffbf2,stroke:#64748b,color:#111827
+    style DB fill:#faf8fd,stroke:#64748b,color:#111827
+```
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables': {'edgeLabelBackground':'#ffffff','lineColor':'#333333','textColor':'#000000'}}}%%
