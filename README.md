@@ -35,37 +35,135 @@
 
 Нотация UML: актёры — вне границы системы, варианты использования — внутри границы «Система DebtFree». Пунктирные стрелки: `«include»` — обязательное включение, `«extend»` — необязательное расширение (стрелка направлена от расширяющего варианта к базовому).
 
-```mermaid
-flowchart LR
-    G["Гость"]
-    U["Пользователь"]
+### 2.1. Блок 1. Аккаунт
 
-    subgraph SYS["Система DebtFree"]
-        direction TB
-        UC1(["UC-1<br/>Зарегистрироваться / войти"])
-        UC2(["UC-2<br/>Управлять долгами"])
-        UC3(["UC-3<br/>Рассчитать ежемесячные платежи"])
-        UC4(["UC-4<br/>Построить график остатка долга"])
-        UC5(["UC-5<br/>Сравнить стратегии погашения"])
-        UC6(["UC-6<br/>Рассчитать общую переплату"])
-        UC7(["UC-7<br/>Смоделировать досрочное погашение"])
-        UC8(["UC-8<br/>Сохранить сценарий"])
+```mermaid
+%%{init: {'theme':'base','themeVariables': {'background':'#000000','primaryColor':'#0f172a','primaryBorderColor':'#60a5fa','primaryTextColor':'#e5e7eb','nodeTextColor':'#e5e7eb','secondaryColor':'#0b0b0b','tertiaryColor':'#0b0b0b','tertiaryTextColor':'#e5e7eb','clusterBkg':'#0b0b0b','clusterBorder':'#e5e7eb','lineColor':'#9ca3af','textColor':'#e5e7eb','titleColor':'#ffffff','edgeLabelBackground':'#000000'}}}%%
+flowchart LR
+    subgraph BG[" "]
+        direction LR
+        G["👤 Гость"]
+        U["👤 Пользователь"]
+
+        subgraph SYS["Система DebtFree — Блок 1. Аккаунт"]
+            direction TB
+            UC1(["UC-1<br/>Зарегистрироваться"])
+            UC2(["UC-2<br/>Войти в систему"])
+            UC3(["UC-3<br/>Выйти из системы"])
+        end
+
+        G --- UC1
+        G --- UC2
+        U --- UC3
     end
 
-    G --- UC1
-    U --- UC1
-    U --- UC2
-    U --- UC4
-    U --- UC5
-    U --- UC7
-
-    UC4 -. "«include»" .-> UC3
-    UC5 -. "«include»" .-> UC3
-    UC5 -. "«include»" .-> UC6
-    UC7 -. "«extend»" .-> UC5
-    UC8 -. "«extend»" .-> UC5
-    U --- UC8
+    style BG fill:#000000,stroke:#000000
+    style SYS fill:#0b0b0b,stroke:#e5e7eb,color:#ffffff
+    linkStyle default stroke:#9ca3af,stroke-width:1.5px
 ```
+### 2.2. Блок 2. Учёт долгов
+
+```mermaid
+%%{init: {'theme':'base','themeVariables': {'background':'#000000','primaryColor':'#0f172a','primaryBorderColor':'#60a5fa','primaryTextColor':'#e5e7eb','nodeTextColor':'#e5e7eb','secondaryColor':'#0b0b0b','tertiaryColor':'#0b0b0b','tertiaryTextColor':'#e5e7eb','clusterBkg':'#0b0b0b','clusterBorder':'#e5e7eb','lineColor':'#9ca3af','textColor':'#e5e7eb','titleColor':'#ffffff','edgeLabelBackground':'#000000'}}}%%
+flowchart LR
+    subgraph BG[" "]
+        direction LR
+        U["👤 Пользователь"]
+
+        subgraph SYS["Система DebtFree — Блок 2. Учёт долгов"]
+            direction TB
+            UC4(["UC-4<br/>Просмотреть список долгов"])
+            UC5(["UC-5<br/>Добавить долг"])
+            UC6(["UC-6<br/>Изменить долг"])
+            UC7(["UC-7<br/>Удалить долг"])
+            UC8(["UC-8<br/>Проверить корректность<br/>данных долга"])
+        end
+
+        U --- UC4
+        U --- UC5
+        U --- UC6
+        U --- UC7
+
+        UC5 -. "«extend»" .-> UC4
+        UC6 -. "«extend»" .-> UC4
+        UC7 -. "«extend»" .-> UC4
+        UC5 -. "«include»" .-> UC8
+        UC6 -. "«include»" .-> UC8
+    end
+
+    style BG fill:#000000,stroke:#000000
+    style SYS fill:#0b0b0b,stroke:#e5e7eb,color:#ffffff
+    linkStyle default stroke:#9ca3af,stroke-width:1.5px
+```
+### 2.3. Блок 3. Расчёты и сравнение
+
+```mermaid
+%%{init: {'theme':'base','themeVariables': {'background':'#000000','primaryColor':'#0f172a','primaryBorderColor':'#60a5fa','primaryTextColor':'#e5e7eb','nodeTextColor':'#e5e7eb','secondaryColor':'#0b0b0b','tertiaryColor':'#0b0b0b','tertiaryTextColor':'#e5e7eb','clusterBkg':'#0b0b0b','clusterBorder':'#e5e7eb','lineColor':'#9ca3af','textColor':'#e5e7eb','titleColor':'#ffffff','edgeLabelBackground':'#000000'}}}%%
+flowchart LR
+    subgraph BG[" "]
+        direction LR
+        U["👤 Пользователь"]
+
+        subgraph SYS["Система DebtFree — Блок 3. Расчёты и сравнение"]
+            direction TB
+            UC9(["UC-9<br/>Задать ежемесячный бюджет"])
+            UC10(["UC-10<br/>Рассчитать ежемесячные платежи"])
+            UC11(["UC-11<br/>Построить график остатка долга"])
+            UC12(["UC-12<br/>Рассчитать общую переплату"])
+            UC13(["UC-13<br/>Сравнить стратегии погашения"])
+        end
+
+        U --- UC9
+        U --- UC11
+        U --- UC13
+
+        UC11 -. "«include»" .-> UC10
+        UC13 -. "«include»" .-> UC9
+        UC13 -. "«include»" .-> UC10
+        UC13 -. "«include»" .-> UC12
+    end
+
+    style BG fill:#000000,stroke:#000000
+    style SYS fill:#0b0b0b,stroke:#e5e7eb,color:#ffffff
+    linkStyle default stroke:#9ca3af,stroke-width:1.5px
+```
+### 2.4. Блок 4. Досрочное погашение и сценарии
+
+UC-13 показан здесь повторно из блока 3, потому что от него отходят действия «по желанию».
+
+```mermaid
+%%{init: {'theme':'base','themeVariables': {'background':'#000000','primaryColor':'#0f172a','primaryBorderColor':'#60a5fa','primaryTextColor':'#e5e7eb','nodeTextColor':'#e5e7eb','secondaryColor':'#0b0b0b','tertiaryColor':'#0b0b0b','tertiaryTextColor':'#e5e7eb','clusterBkg':'#0b0b0b','clusterBorder':'#e5e7eb','lineColor':'#9ca3af','textColor':'#e5e7eb','titleColor':'#ffffff','edgeLabelBackground':'#000000'}}}%%
+flowchart LR
+    subgraph BG[" "]
+        direction LR
+        U["👤 Пользователь"]
+
+        subgraph SYS["Система DebtFree — Блок 4. Досрочное погашение и сценарии"]
+            direction TB
+            UC13(["UC-13<br/>Сравнить стратегии погашения<br/>(из блока 3)"])
+            UC14(["UC-14<br/>Смоделировать<br/>досрочное погашение"])
+            UC15(["UC-15<br/>Выбрать эффект платежа:<br/>сократить срок или снизить платёж"])
+            UC16(["UC-16<br/>Сохранить сценарий"])
+            UC17(["UC-17<br/>Просмотреть сохранённые сценарии"])
+            UC18(["UC-18<br/>Удалить сценарий"])
+        end
+
+        U --- UC14
+        U --- UC16
+        U --- UC17
+        U --- UC18
+
+        UC14 -. "«extend»" .-> UC13
+        UC16 -. "«extend»" .-> UC13
+        UC14 -. "«include»" .-> UC15
+        UC18 -. "«extend»" .-> UC17
+    end
+
+    style BG fill:#000000,stroke:#000000
+    style SYS fill:#0b0b0b,stroke:#e5e7eb,color:#ffffff
+    linkStyle default stroke:#9ca3af,stroke-width:1.5px
+```
+
 
 **Описание актёров**
 
