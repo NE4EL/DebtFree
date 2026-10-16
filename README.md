@@ -38,12 +38,11 @@
 ### 2.1. Блок 1. Аккаунт
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables': {'background':'#000000','primaryColor':'#0f172a','primaryBorderColor':'#60a5fa','primaryTextColor':'#e5e7eb','nodeTextColor':'#e5e7eb','secondaryColor':'#0b0b0b','tertiaryColor':'#0b0b0b','tertiaryTextColor':'#e5e7eb','clusterBkg':'#0b0b0b','clusterBorder':'#e5e7eb','lineColor':'#9ca3af','textColor':'#e5e7eb','titleColor':'#ffffff','edgeLabelBackground':'#000000'}}}%%
 flowchart LR
     subgraph BG[" "]
         direction LR
-        G["👤 Гость"]
-        U["👤 Пользователь"]
+        G["Гость"]
+        U["Пользователь"]
 
         subgraph SYS["Система DebtFree — Блок 1. Аккаунт"]
             direction TB
