@@ -203,8 +203,6 @@ flowchart LR
 
 ## 3. Диаграмма бизнес-процесса (BPMN)
 
-Процесс «Планирование погашения долгов» в нотации BPMN 2.0: две дорожки (lanes) внутри пула, события (круги), задачи (прямоугольники), исключающие шлюзы (ромбы). Диаграмма построена средствами Mermaid, поэтому изображение приближено к BPMN-нотации: дорожки показаны как вложенные группы.
-
 ```mermaid
 %%{init: {"theme": "base", "fontFamily": "Arial, sans-serif", "themeVariables": {"fontFamily": "Arial, sans-serif", "lineColor": "#000000", "textColor": "#000000", "edgeLabelBackground": "#ffffff"}}}%%
 block-beta
