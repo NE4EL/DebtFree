@@ -68,7 +68,7 @@ flowchart LR
         direction LR
         U["Пользователь"]
 
-        subgraph SYS["Система DebtFree — Блок 2. Учёт долгов"]
+        subgraph SYS[" "]
             direction TB
             UC4(["UC-4<br/>Просмотреть список долгов"])
             UC5(["UC-5<br/>Добавить долг"])
@@ -96,13 +96,12 @@ flowchart LR
 ### 2.3. Блок 3. Расчёты и сравнение
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables': {'background':'#000000','primaryColor':'#0f172a','primaryBorderColor':'#60a5fa','primaryTextColor':'#e5e7eb','nodeTextColor':'#e5e7eb','secondaryColor':'#0b0b0b','tertiaryColor':'#0b0b0b','tertiaryTextColor':'#e5e7eb','clusterBkg':'#0b0b0b','clusterBorder':'#e5e7eb','lineColor':'#9ca3af','textColor':'#e5e7eb','titleColor':'#ffffff','edgeLabelBackground':'#000000'}}}%%
 flowchart LR
     subgraph BG[" "]
         direction LR
-        U["👤 Пользователь"]
+        U["Пользователь"]
 
-        subgraph SYS["Система DebtFree — Блок 3. Расчёты и сравнение"]
+        subgraph SYS[" "]
             direction TB
             UC9(["UC-9<br/>Задать ежемесячный бюджет"])
             UC10(["UC-10<br/>Рассчитать ежемесячные платежи"])
@@ -130,13 +129,12 @@ flowchart LR
 UC-13 показан здесь повторно из блока 3, потому что от него отходят действия «по желанию».
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables': {'background':'#000000','primaryColor':'#0f172a','primaryBorderColor':'#60a5fa','primaryTextColor':'#e5e7eb','nodeTextColor':'#e5e7eb','secondaryColor':'#0b0b0b','tertiaryColor':'#0b0b0b','tertiaryTextColor':'#e5e7eb','clusterBkg':'#0b0b0b','clusterBorder':'#e5e7eb','lineColor':'#9ca3af','textColor':'#e5e7eb','titleColor':'#ffffff','edgeLabelBackground':'#000000'}}}%%
 flowchart LR
     subgraph BG[" "]
         direction LR
-        U["👤 Пользователь"]
+        U["Пользователь"]
 
-        subgraph SYS["Система DebtFree — Блок 4. Досрочное погашение и сценарии"]
+        subgraph SYS[" "]
             direction TB
             UC13(["UC-13<br/>Сравнить стратегии погашения<br/>(из блока 3)"])
             UC14(["UC-14<br/>Смоделировать<br/>досрочное погашение"])
