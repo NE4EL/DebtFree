@@ -213,8 +213,8 @@ flowchart LR
 |------|------------|
 | Язык и расчёты | Python 3.11+, `decimal` |
 | Backend | FastAPI, Pydantic |
-| БД | SQLite (разработка) / PostgreSQL, SQLAlchemy, Alembic |
-| Frontend | HTML, CSS, JavaScript, Chart.js |
+| БД | PostgreSQL |
+| Frontend | HTML, CSS, JavaScrip |
 | Тесты | pytest |
 
 ```text
