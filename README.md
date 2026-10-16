@@ -89,6 +89,7 @@ flowchart LR
 Процесс «Планирование погашения долгов» в нотации BPMN 2.0: две дорожки (lanes) внутри пула, события (круги), задачи (прямоугольники), исключающие шлюзы (ромбы). Диаграмма построена средствами Mermaid, поэтому изображение приближено к BPMN-нотации: дорожки показаны как вложенные группы.
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables': {'edgeLabelBackground':'#ffffff','lineColor':'#333333','textColor':'#000000'}}}%%
 flowchart LR
     subgraph POOL["Пул: DebtFree — планирование погашения"]
         direction LR
@@ -127,12 +128,18 @@ flowchart LR
     G3 -- "Да" --> A4 --> B6 --> B5
     G3 -- "Нет" --> A5 --> B7 --> E
 
-    classDef event fill:#fff,stroke:#333,stroke-width:2px;
-    classDef gateway fill:#fff7d6,stroke:#8a5a00;
-    classDef task fill:#e4f0ff,stroke:#1a3d6d;
+    %% цвет текста задаётся параметром color
+    classDef event   fill:#ffffff,stroke:#333,stroke-width:2px,color:#000000;
+    classDef gateway fill:#fff7d6,stroke:#8a5a00,color:#5c3b00;
+    classDef task    fill:#e4f0ff,stroke:#1a3d6d,color:#0b2545;
     class S,E event;
     class G1,G2,G3 gateway;
     class A1,A2,A3,A4,A5,B1,B2,B3,B4,B5,B6,B7 task;
+
+    %% заголовки дорожек и пула
+    style POOL fill:#ffffff,stroke:#333,color:#000000
+    style LU   fill:#f6f8fb,stroke:#1a3d6d,color:#0b2545
+    style LS   fill:#f6fbf6,stroke:#2e7d32,color:#1b4d1f
 ```
 
 | Элемент BPMN | Обозначение на диаграмме |
