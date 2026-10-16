@@ -44,7 +44,7 @@ flowchart LR
         G["Гость"]
         U["Пользователь"]
 
-        subgraph SYS["Система DebtFree — Блок 1. Аккаунт"]
+        subgraph SYS[" "]
             direction TB
             UC1(["UC-1<br/>Зарегистрироваться"])
             UC2(["UC-2<br/>Войти в систему"])
