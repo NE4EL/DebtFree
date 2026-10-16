@@ -37,8 +37,8 @@
 
 ```mermaid
 flowchart LR
-    G["👤 Гость"]
-    U["👤 Пользователь"]
+    G["Гость"]
+    U["Пользователь"]
 
     subgraph SYS["Система DebtFree"]
         direction TB
