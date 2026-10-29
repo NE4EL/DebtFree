@@ -1,0 +1,60 @@
+name: debtfree
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-debtfree}
+      POSTGRES_USER: ${POSTGRES_USER:-debtfree}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Задайте POSTGRES_PASSWORD в файле .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # выполняется только при первом создании тома: создаёт базу для тестов
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  backend:
+    build:
+      context: ./backend
+      target: production
+    restart: unless-stopped
+    environment:
+      ENVIRONMENT: production
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-debtfree}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-debtfree}
+      JWT_SECRET: ${JWT_SECRET:?Задайте JWT_SECRET в файле .env}
+      JWT_EXPIRE_MINUTES: ${JWT_EXPIRE_MINUTES:-1440}
+      DOCS_ENABLED: ${DOCS_ENABLED:-true}
+      CORS_ORIGINS: "[]" # frontend и API на одном адресе — CORS не нужен
+      WEB_CONCURRENCY: ${WEB_CONCURRENCY:-2}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8080}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  # Тесты: docker compose --profile test run --rm tests
+  tests:
+    profiles: ["test"]
+    build:
+      context: ./backend
+      target: test
+    environment:
+      TEST_DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-debtfree}:${POSTGRES_PASSWORD}@db:5432/debtfree_test
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

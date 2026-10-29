@@ -1,0 +1,4 @@
+# Единые переводы строк для Windows и macOS (важно для файлов внутри Docker)
+* text=auto eol=lf
+*.png binary
+*.svg text eol=lf

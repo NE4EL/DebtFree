@@ -64,7 +64,7 @@
 <text x="66" y="471" font-size="10" font-weight="bold" fill="#8a5a00"></text>
 <text x="112" y="471" font-weight="normal">payment_type</text>
 <text x="314" y="471" text-anchor="end" fill="#555" font-size="10">VARCHAR(10)</text>
-<rect x="470" y="186" width="280" height="160" fill="#fff" stroke="#1a3d6d" stroke-width="1.5"/>
+<rect x="470" y="186" width="280" height="182" fill="#fff" stroke="#1a3d6d" stroke-width="1.5"/>
 <rect x="470" y="186" width="280" height="28" fill="#1a3d6d"/>
 <text x="610.0" y="205" text-anchor="middle" fill="#fff" font-weight="bold" font-size="14">extra_payments</text>
 <rect x="470" y="214" width="280" height="22" fill="#fff7d6" stroke="#c5cfdd" stroke-width="0.7"/>
@@ -74,7 +74,7 @@
 <rect x="470" y="236" width="280" height="22" fill="#e4f0ff" stroke="#c5cfdd" stroke-width="0.7"/>
 <text x="476" y="251" font-size="10" font-weight="bold" fill="#8a5a00">FK</text>
 <text x="522" y="251" font-weight="normal">debt_id</text>
-<text x="744" y="251" text-anchor="end" fill="#555" font-size="10">INTEGER</text>
+<text x="744" y="251" text-anchor="end" fill="#555" font-size="10">INTEGER NULL</text>
 <rect x="470" y="258" width="280" height="22" fill="#e4f0ff" stroke="#c5cfdd" stroke-width="0.7"/>
 <text x="476" y="273" font-size="10" font-weight="bold" fill="#8a5a00">FK</text>
 <text x="522" y="273" font-weight="normal">scenario_id</text>
@@ -91,6 +91,10 @@
 <text x="476" y="339" font-size="10" font-weight="bold" fill="#8a5a00"></text>
 <text x="522" y="339" font-weight="normal">effect</text>
 <text x="744" y="339" text-anchor="end" fill="#555" font-size="10">VARCHAR(10)</text>
+<rect x="470" y="346" width="280" height="22" fill="#fff" stroke="#c5cfdd" stroke-width="0.7"/>
+<text x="476" y="361" font-size="10" font-weight="bold" fill="#8a5a00"></text>
+<text x="522" y="361" font-weight="normal">is_regular</text>
+<text x="744" y="361" text-anchor="end" fill="#555" font-size="10">BOOLEAN</text>
 <rect x="470" y="390" width="280" height="72" fill="#fff" stroke="#1a3d6d" stroke-width="1.5"/>
 <rect x="470" y="390" width="280" height="28" fill="#1a3d6d"/>
 <text x="610.0" y="409" text-anchor="middle" fill="#fff" font-weight="bold" font-size="14">scenario_debts</text>
